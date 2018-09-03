@@ -19,7 +19,7 @@ var self = module.exports = {
         allureReporter.setOptions({targetDir: outputDirectoryPath});
       }
     },
-    write: function (results, done, directoryPath, reportPath) {
+    write: function (results, done, directoryPath = path.join(__dirname, '../../'), reportPath) {
         allureReporter.setOptions(" -o reports/allure-report" || {});
         for (var currentModule in results.modules) {
             module = results.modules[currentModule];
@@ -43,7 +43,7 @@ var self = module.exports = {
               if (typeof reportPath !== 'undefined') {
                 allureReporter.setOptions({targetDir: path.join(directoryPath, reportPath)});
               }
-                currentTest.tags = self.parseFileForTags(directoryPath + "/tests/" + currentModule + ".js");
+                currentTest.tags = self.parseFileForTags(directoryPath + "src/tests/" + currentModule + ".js");
             }
 
             if (currentTest.skipped === currentTest.tests) {
@@ -126,7 +126,7 @@ var self = module.exports = {
 
             if (currentTest.isFailure) {
                 if (typeof directoryPath !== 'undefined') {
-                    find.file(/\.png$/, directoryPath + "/screenshots/" + results.environment + "/" + currentModule, function (files) {
+                    find.file(/\.png$/, directoryPath + "reports/nightwatch/screenshots/" + currentModule, function (files) {
                         files.forEach(function (file) {
                             fs.readFile(file, function (err, data) {
                                 allureReporter.addAttachment("screenshots", data, "image/png");
