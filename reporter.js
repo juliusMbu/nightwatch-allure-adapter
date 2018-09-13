@@ -14,7 +14,7 @@ var runtimeAllure = new Runtime(allureReporter);
 var find = require("find");
 
 var self = module.exports = {
-    setOutputDirectory: function(outputDirectoryPath){
+    setOutputDirectory: function(outputDirectoryPath) {
       if (typeof outputDirectoryPath !== 'undefined') {
         allureReporter.setOptions({targetDir: outputDirectoryPath});
       }
